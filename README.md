@@ -2,7 +2,7 @@
 
 ## 📚 Table of Contents
 
-- [Naming Conventions](docs/ifcs-naming-conventions.md)
+- [Naming Conventions](docs/naming-conventions.md)
 
 ## Getting started
 
