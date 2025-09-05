@@ -22,9 +22,9 @@ This follows a _Hungarian Notation_-like style.
 | **ao** | Array of Objects                   | `aoStackEntries`, `aoLogLocations`                    | Indicates collection of structured objects.                |
 | **e**  | Enum Value                         | `eIFCSClient`, `ePositionInPairOrGroup`               | Refers to specific enum members.                           |
 | **E**  | Enum Type                          | `EIFCSClient`, `EAppProcess`                          | Denotes an enum definition (PascalCase).                   |
-| **C**  | Class                              | `CLog`, `CFTPHost`, `CMOAirports`                     | Core classes (PascalCase).                                 |
+| **C**  | Class                              | `CLog`, `CFTPHost`, `CMOAirports`, `CRESTServer`      | Core classes (PascalCase).                                 |
 | **S**  | Static Utility / Singleton         | `SSingleton`, `SGeneral`, `STime`                     | Classes with only static members or singleton enforcement. |
-| **T**  | Type Alias                         | `TPath`, `TClientConfig`                              | Used with TypeScript `type` keyword.                       |
+| **T**  | Type Alias                         | `TPath`, `TClientConfig`, `TResponseJsonParam`        | Used with TypeScript `type` keyword.                       |
 | **f**  | Function                           | `fLog`, `foClientConfigFromFileAndArg`                | General-purpose function or method.                        |
 | **fb** | Function returning Boolean         | `fbDateIsInConfigRange`                               | Starts with `f` but signals a boolean return.              |
 | **fo** | Function returning Object          | `foFTPHostFromCommon`, `foClientConfigFromFileAndArg` | Indicates the function returns an object.                  |
@@ -33,6 +33,7 @@ This follows a _Hungarian Notation_-like style.
 | **fd** | Function returning Date            | `fdNow`, `fdStartFrom`                                | For Date/time values.                                      |
 | **m**  | Map (object-as-dictionary)         | `moAirports`, `moAircrafts`                           | Maps of structured objects, often keyed by code.           |
 | **g**  | Global (shared singleton)          | `goConfig`, `goLog`                                   | Exported global object instances.                          |
+| **Ex** | Express-related alias              | `ExReq`, `ExRes`, `ExNextFn`                          | Short for `Express.Request`, `Express.Response`, etc.      |
 
 ---
 
@@ -79,20 +80,30 @@ export const goConfig = { ... }   // "g" → global shared config object
 export const goLog = new CLog();  // global logger instance
 ```
 
-### Example: Class
+### Example: Classes
 
 ```ts
 export class CFTPHost { ... }     // "C" → class
+export class CRESTServer { ... }  // "C" → class for REST API server
 ```
 
-## 3. Summary
+### Example: Express Aliases
+
+```ts
+import { Request as ExReq, Response as ExRes, NextFunction as ExNextFn } from "express";
+
+function fExampleHandler(oReq: ExReq, oRes: ExRes, oNext: ExNextFn) { ... }
+```
+
+---
+
+## 4. Summary
 
 The naming system is systematic, not random:
 
 - Prefixes encode type or intent.
-
 - File numbers encode category and order.
-
-- Global exports (goSomething) act as central singletons.
+- Global exports (`goSomething`) act as central singletons.
+- `Ex` aliases are used for Express types to make code shorter and consistent.
 
 Once the prefixes are understood, it is easy to predict what a variable or function is just by its name.
