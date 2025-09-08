@@ -144,13 +144,3 @@ A utility endpoint independent of the main trigger flow.
 **Notes:** This endpoint should be implemented to avoid interfering with `fActOnTrigger` state (i.e., it can run while the server is Busy, because it is a standalone utility). If desired, add rate-limiting or size checks to prevent excessive memory use.
 
 ---
-
-## Notes & Best Practices
-
-- **Single-writer lock:** Using the `Busy`/`Idle` state is a simple form of single-writer lock. Ensure the state change is atomic. Prefer using a small in-memory mutex or an external lock (Redis) if running multiple server instances.
-- **Timeouts & Failure Handling:** If `fActOnTrigger` throws or gets stuck, make sure to catch errors, log them, and set server state back to `Idle` after a fail-safe timeout/cleanup. Otherwise, the server may remain `Busy` indefinitely.
-- **Observability:** Log start/end timestamps, function names executed, and a brief summary of results. Expose metrics (e.g., Prometheus) for `trigger` attempts, success/fail counts, and current state.
-- **Security:** Validate and sanitize input for `/merge-pdf` and `/trigger`. Enforce auth (API key / JWT) for trigger endpoints if needed.
-- **Client feedback:** Since the trigger returns immediately, consider adding an async job-status endpoint or job IDs to let clients poll for progress or results if required.
-
----
